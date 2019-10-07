@@ -21,14 +21,14 @@ do
     echo "$ttl"
     
     # TTL for Linux is 64
-    if [ $ttl -eq 64 ]
+    if [ $ttl -eq 64 ] || [ $ttl -eq 255 ]
     then
         echo "Host: $item  OS: Linux"
-    fi
-    
     # TTL for Windows is 128
-    if [ $ttl -eq 128 ]
+    elif [ $ttl -eq 128 ] || [ $ttl -eq 32 ]
     then
         echo "Host: $item  OS: Windows"
+    else
+        echo "Host: $item  Could not determine OS based on TTL value"
     fi
 done
