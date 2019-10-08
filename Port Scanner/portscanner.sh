@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # This script uses /dev/tcp/host/port to create a tcp
-# socket connection and then checks to see if a port 
-# is open or closed
+# socket connection and then
 
 
 # Get the Bit Netmask
@@ -66,7 +65,7 @@ getIPs() {
     wildcard_mask=$(wildcard_mask "$bit_netmask")
     i=1
     str=
-    while [$i -le 4]
+    while [ $i -le 4 ]
     do
      range=$(echo $net | cut -d '.' -f $i)
      mask_octet=$(echo $wildcard_mask | cut -d ' ' -f $i)
@@ -77,7 +76,7 @@ getIPs() {
      str="${str} $range"
      $i++
     done
-    ips=$(echo $str | sed "s, ,\\.,g") 
+    ips=$(echo $str | sed "s, ,\\.,g") ## replace spaces with periods, a join...
     eval echo $ips | tr ' ' '\n'
 
   # This is a single IP address
@@ -94,17 +93,19 @@ getportnum() {
   fi
   if [[ $ports = *-* ]]
   then
-  	# ERROR IS HERE
     start=$(echo $ports | cut -d '-' -f 1)
     end=$(echo $ports | cut -d '-' -f 2)
-    while ($start -le $end)
+    ports=
+    while [ "${start}" -le "${end}" ]
     do
-        ports+=$start
-        $start++
+	ports+="${start} "
+	start=$(expr "${start}" + 1)
     done
+
   fi
   echo $ports
 }
+
 
 #check the number of arguments
 if [ "$#" != "2" ]
@@ -113,15 +114,15 @@ then
     exit 
 fi
 
-ips=$( getIPs $1 )
-port=$( getportnum $2 )
+ips=$(getIPs $1)
+ports=$(getportnum $2)
 
 for ip in $ips 
 do
-    echo "Host: $ip"
-  for p in $port 
+  echo "Host: $ip"
+  for port in $ports 
   do
         # Uses /dev/tcp/host/port to open tcp socket connection
-        timeout 1 bash -c "echo > /dev/tcp/$ip/$p 2> /dev/null" && echo "Port $p is Open on $ip" || echo "Port $p is Closed on $ip"
+        timeout 1 bash -c "echo > /dev/tcp/$ip/$port" && echo "Port $port is Open" || echo "Port $port is Closed"
   done
 done
