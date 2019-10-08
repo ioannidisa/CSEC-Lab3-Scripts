@@ -123,6 +123,6 @@ do
   for port in $ports 
   do
         # Uses /dev/tcp/host/port to open tcp socket connection
-        timeout 1 bash -c "echo > /dev/tcp/$ip/$port" && echo "Port $port is Open" || echo "Port $port is Closed"
+        timeout 1 bash -c "echo > /dev/tcp/$ip/$port" && echo "Port $port is Open"
   done
 done
