@@ -9,7 +9,7 @@ fi
 
 FILE="$1"
 lines=`cat $FILE`
-echo "$lines"
+
 
 # Loop through each of the IP addresses in the file
 for item in $lines;
@@ -18,7 +18,6 @@ do
     ttlstr=$(ping -c1 $item | grep -o 'ttl=[0-9][0-9]*') || { 
         continue;}
     ttl="${ttlstr#*=}"
-    echo "$ttl"
     
     # TTL for Linux is 64 or 255
     if [ $ttl -eq 64 ] || [ $ttl -eq 255 ]
