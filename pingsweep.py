@@ -44,7 +44,7 @@ def main():
         for i in range(x, y + 1):
             response = os.system("ping -c 1 " + socket.inet_ntoa(ipstruct.pack(i)) + " > /dev/null")
             if response == 0:
-                print("Host is up:", str(address))
+                print("Host is up:", str(socket.inet_ntoa(ipstruct.pack(i))))
                 up.append(socket.inet_ntoa(ipstruct.pack(i)))
 
     elif '/' in useri:
