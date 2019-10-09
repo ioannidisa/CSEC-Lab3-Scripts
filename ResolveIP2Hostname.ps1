@@ -1,6 +1,11 @@
-$ip = $args[0]
 
-$listofIPs = Get-Content $ip
+if ($Args.Count -lt 1){
+	throw "Error: File not specified"
+}
+
+$ip = $Args[0]
+
+$listofIPs = Get-Content -Path $ip
 
 #create a blank array for resolved names
 $ResultList = @()
@@ -13,15 +18,13 @@ foreach ($ip in $listofIPs){
 
      #Use the DNS Static .Net class for the reverse lookup
 
-     $result = [System.Net.Dns]::gethostentry($ip)
+     $result = [System.Net.Dns]::gethostentry($ip).Hostname
      $ErrorActionPreference = $currentEAP
 
      If ($Result){
-          $Resultlist += [string]$Result.HostName
-     }Else{
-          $Resultlist += "$IP - No HostNameFound"
+          Write-Host "IP: $ip      Hostname:$result.Hostname"
+     }
+     Else{
+          Write-Host "IP: $IP - No Hostname Found"
      }
 }
-
-#write output
-Write-Host $ResultList
