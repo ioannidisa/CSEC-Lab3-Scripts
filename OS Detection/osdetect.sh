@@ -20,11 +20,11 @@ do
     ttl="${ttlstr#*=}"
     echo "$ttl"
     
-    # TTL for Linux is 64
+    # TTL for Linux is 64 or 255
     if [ $ttl -eq 64 ] || [ $ttl -eq 255 ]
     then
         echo "Host: $item  OS: Linux"
-    # TTL for Windows is 128
+    # TTL for Windows is 128 or 32
     elif [ $ttl -eq 128 ] || [ $ttl -eq 32 ]
     then
         echo "Host: $item  OS: Windows"
