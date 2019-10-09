@@ -1,4 +1,5 @@
 
+# Checks if a file was specified
 if ($Args.Count -lt 1){
 	throw "Error: File not specified"
 }
@@ -21,8 +22,10 @@ foreach ($ip in $listofIPs){
      $result = [System.Net.Dns]::gethostentry($ip).Hostname
      $ErrorActionPreference = $currentEAP
 
+     # If a hostname exists, output it 
+     # If a hostname does not exist, indicate that there is no hostname
      If ($Result){
-          Write-Host "IP: $ip      Hostname:$result.Hostname"
+          Write-Host "IP: $ip    Hostname:$result.Hostname"
      }
      Else{
           Write-Host "IP: $IP - No Hostname Found"
