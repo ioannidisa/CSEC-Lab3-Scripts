@@ -44,6 +44,7 @@ def main():
         for i in range(x, y + 1):
             response = os.system("ping -c 1 " + socket.inet_ntoa(ipstruct.pack(i)) + " > /dev/null")
             if response == 0:
+                print("Host is up:", str(address))
                 up.append(socket.inet_ntoa(ipstruct.pack(i)))
 
     elif '/' in useri:
@@ -51,6 +52,7 @@ def main():
         for address in network:
             response = os.system("ping -c 1 " + str(address) + " > /dev/null")
             if response == 0:
+                print("Host is up:", str(address))
                 up.append(str(address))
     else:
         print("Invalid formatting: " + useri)
